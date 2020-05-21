@@ -14,3 +14,5 @@ Features we want to implement:
 * Additions to MDL that require changes to the language:
   * Change the behavior of vary
     * Add a parameter to change how it calculates the change over time: Linear, Exponential, Logarithmic
+    * Syntax: `vary [knob] [start_frame] [end_frame] [start_value] [end_value] [knob name] [equation]`
+    * Ex. `rotate z 10 tilt 2x^2`
