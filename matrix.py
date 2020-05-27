@@ -89,7 +89,7 @@ def print_matrix( matrix ):
             s+= str(matrix[c][r]) + ' '
         s+= '\n'
     print(s)
-    
+
 #turn the paramter matrix into an identity matrix
 #you may assume matrix is square
 def ident( matrix ):

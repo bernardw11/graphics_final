@@ -20,28 +20,28 @@ from draw import *
   ==================== """
 def first_pass( commands ):
 
+    frameCheck = varyCheck = nameCheck = False
     name = ''
     num_frames = 1
-    vary = False
 
-    for c in commands:
-        if c['op'] == 'basename':
-            name = c['args'][0]
+    for command in commands:
 
-        elif c['op'] == 'frames':
-            num_frames = int(c['args'][0])
+        if command['op'] == 'frames':
+            num_frames = int(command['args'][0])
+            frameCheck = True
+        elif command['op'] == 'vary':
+            varyCheck = True
+        elif command['op'] == 'basename':
+            name = command['args'][0]
+            nameCheck = True
 
-        elif c['op'] == 'vary':
-            vary = True
+    if varyCheck and not frameCheck:
+        print('Error: Vary command found without setting number of frames!')
+        exit()
 
-    if vary and num_frames == 1:
-        print("Vary value found, but not frames. Exiting")
-        quit()
-
-    if name == '':
-        name = 'default_gif'
-        print("No basename given. Using default value of default_gif")
-
+    elif frameCheck and not nameCheck:
+        print('Animation code present but basename was not set. Using "frame" as basename.')
+        name = 'frame'
 
     return (name, num_frames)
 
@@ -65,19 +65,32 @@ def first_pass( commands ):
 def second_pass( commands, num_frames ):
     frames = [ {} for i in range(num_frames) ]
 
-    for c in commands:
-        if c['op'] == 'vary':
-            args = c['args']
-            start_frame = int(args[0])
-            end_frame = int(args[1])
-            knob = c['knob']
-            start_knob = float(args[2])
-            end_knob = float(args[3])
-            d_k = (end_knob - start_knob) / (end_frame - start_frame)
-            for i in range(start_frame, end_frame):
-                start_knob += d_k
-                frames[i][knob] = start_knob
+    for command in commands:
+        if command['op'] == 'vary':
+            args = command['args']
+            knob_name = command['knob']
+            start_frame = args[0]
+            end_frame = args[1]
+            start_value = float(args[2])
+            end_value = float(args[3])
+            value = 0
 
+            if ((start_frame < 0) or
+                (end_frame >= num_frames) or
+                (end_frame <= start_frame)):
+                print('Invalid vary command for knob: ' + knob_name)
+                exit()
+
+            delta = (end_value - start_value) / (end_frame - start_frame)
+
+            for f in range(num_frames):
+                if f == start_frame:
+                    value = start_value
+                    frames[f][knob_name] = value
+                elif f >= start_frame and f <= end_frame:
+                    value = start_value + delta * (f - start_frame)
+                    frames[f][knob_name] = value
+                #print 'knob: ' + knob_name + '\tvalue: ' + str(frames[f][knob_name])
     return frames
 
 
@@ -116,32 +129,32 @@ def run(filename):
     (name, num_frames) = first_pass(commands)
     frames = second_pass(commands, num_frames)
 
+    for f in range(num_frames):
+        tmp = new_matrix()
+        ident( tmp )
 
-    tmp = new_matrix()
-    ident( tmp )
+        stack = [ [x[:] for x in tmp] ]
+        screen = new_screen()
+        zbuffer = new_zbuffer()
+        tmp = []
+        step_3d = 100
+        consts = ''
+        coords = []
+        coords1 = []
 
-    stack = [ [x[:] for x in tmp] ]
-    screen = new_screen()
-    zbuffer = new_zbuffer()
-    tmp = []
-    step_3d = 100
-    consts = ''
-    coords = []
-    coords1 = []
 
-    count = 0
-
-    for frame in frames:
-
-        print count
+        #Set symbol values for multiple frames
+        if num_frames > 1:
+            frame = frames[f]
+            for knob in frame:
+                symbols[knob][1] = frame[knob]
+                print('\tkob: ' + knob + '\tvalue: ' + str(frame[knob]))
 
         for command in commands:
+            print(command)
             c = command['op']
             args = command['args']
             knob_value = 1
-
-            for knob in frame.keys():
-                    symbols[knob] = frame[knob]
 
             if c == 'box':
                 if command['constants']:
@@ -178,34 +191,23 @@ def run(filename):
                 draw_lines(tmp, screen, zbuffer, color)
                 tmp = []
             elif c == 'move':
-                knob = command['knob']
-
-                if knob:
-                    tmp = make_translate(args[0]*symbols[knob], args[1]*symbols[knob], args[2]*symbols[knob])
-                else:
-                    tmp = make_translate(args[0], args[1], args[2])
-
+                if command['knob']:
+                    knob_value = symbols[command['knob']][1]
+                tmp = make_translate(args[0] * knob_value, args[1] * knob_value, args[2] * knob_value)
                 matrix_mult(stack[-1], tmp)
                 stack[-1] = [x[:] for x in tmp]
                 tmp = []
             elif c == 'scale':
-                knob = command['knob']
-
-                if knob:
-                    tmp = make_scale(args[0]*symbols[knob], args[1]*symbols[knob], args[2]*symbols[knob])
-                else:
-                    tmp = make_scale(args[0], args[1], args[2])
+                if command['knob']:
+                    knob_value = symbols[command['knob']][1]
+                tmp = make_scale(args[0] * knob_value, args[1] * knob_value, args[2] * knob_value)
                 matrix_mult(stack[-1], tmp)
                 stack[-1] = [x[:] for x in tmp]
                 tmp = []
             elif c == 'rotate':
-                knob = command['knob']
-
-                if knob:
-                    theta = args[1] * symbols[knob] * (math.pi/180)
-                else:
-                    theta = args[1]* (math.pi/180)
-
+                if command['knob']:
+                    knob_value = symbols[command['knob']][1]
+                theta = args[1] * (math.pi/180) * knob_value
                 if args[0] == 'x':
                     tmp = make_rotX(theta)
                 elif args[0] == 'y':
@@ -223,21 +225,11 @@ def run(filename):
                 display(screen)
             elif c == 'save':
                 save_extension(screen, args[0])
-
-        if(name != 'default_gif' and num_frames != 1):
-            diff = len(str(num_frames)) - len(str(count))
-
-            add_string = "0" * diff + str(count)
-            save_extension(screen, "./anim/"+ name + add_string)
-            tmp = new_matrix()
-            ident( tmp )
-            stack = [ [x[:] for x in tmp] ]
-            screen = new_screen()
-            zbuffer = new_zbuffer()
-            count += 1
-
-    if(name != 'default_gif' and num_frames != 1):
+            # end operation loop
+        if num_frames > 1:
+            fname = 'anim/%s%03d.png'%(name, f)
+            print('Saving frame: '  + fname)
+            save_extension(screen, fname)
+        # end fromes loop
+    if num_frames > 1:
         make_animation(name)
-
-
-        # end operation loop
