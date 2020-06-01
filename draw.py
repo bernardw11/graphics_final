@@ -61,9 +61,11 @@ def scanline_convert_shading(polygons, point, screen, zbuffer, view, ambient, li
                (polygons[point+1][0], polygons[point+1][1], polygons[point+1][2], vectors[1]),
                (polygons[point+2][0], polygons[point+2][1], polygons[point+2][2], vectors[2]) ]
 
-    points.sort(key = lambda y: y[1])
-    x0 = x1 = points[BOT][0]
-    z0 = z1 = points[BOT][2]
+    points.sort(key = lambda x: x[1])
+    x0 = points[BOT][0]
+    z0 = points[BOT][2]
+    x1 = points[BOT][0]
+    z1 = points[BOT][2]
     y = int(points[BOT][1])
 
     distance0 = int(points[TOP][1]) - y * 1.0 + 1
