@@ -70,6 +70,7 @@ def scanline_convert_shading(polygons, point, screen, zbuffer, view, ambient, li
 
     distance0 = int(points[TOP][1]) - y * 1.0 + 1
     distance1 = int(points[MID][1]) - y * 1.0 + 1
+    distance2 = int(points[TOP][1]) - int(points[MID][1]) * 1.0 + 1
 
     dx0 = (points[TOP][0] - x0) / distance0 if distance0 != 0 else 0
     dz0 = (points[TOP][2] - z0) / distance0 if distance0 != 0 else 0
@@ -89,8 +90,6 @@ def scanline_convert_shading(polygons, point, screen, zbuffer, view, ambient, li
     dxr1 = (points[MID][3][0] - xr0) / distance1 if distance1 != 0 else 0
     dyg1 = (points[MID][3][1] - yg0) / distance1 if distance1 != 0 else 0
     dzb1 = (points[MID][3][2] - zb0) / distance1 if distance1 != 0 else 0
-
-    distance2 = int(points[TOP][1]) - int(points[MID][1]) * 1.0 + 1
 
     while y <= int(points[TOP][1]):
         if ( not flip and y >= int(points[MID][1])):
