@@ -32,15 +32,15 @@ def draw_scanline_shading(x0, z0, x1, z1, y, screen, zbuffer, color, vertices, v
     while x <= x1:
         if shading == 'gouraud':
             gcolor = [ int(xr), int(yg), int(zb)]
-            plot(screen, zbuffer, gcolor, xr, yg, zb)
+            plot(screen, zbuffer, gcolor, x, y, z)
 
         elif shading == 'phong':
             colors = get_lighting([xr,yg,zb], view, ambient, light, symbols, reflect)
-            plot(screen, zbuffer, colors, xr, yg, zb)
+            plot(screen, zbuffer, colors, x, y, z)
 
 
-        xr+= 1
-        zb+= (z1 - z0) / (x1 - x0 + 1) if (x1 - x0 + 1) != 0 else 0
+        x += 1
+        z += (z1 - z0) / (x1 - x0 + 1) if (x1 - x0 + 1) != 0 else 0
 
         # update values based on those slopes
         if shading == 'gouraud' or shading == 'phong':
