@@ -83,7 +83,7 @@ def limit_color(color):
     color[BLUE] = 255 if color[BLUE] > 255 else color[BLUE]
 
 #vector functions
-#normalize vetor, should modify the parameter
+#normalize vector, should modify the parameter
 def normalize(vector):
     magnitude = math.sqrt( vector[0] * vector[0] +
                            vector[1] * vector[1] +

@@ -16,9 +16,14 @@ def draw_scanline_shading(x0, z0, x1, z1, y, screen, zbuffer, color, vertices, v
     x = x0
     z = z0
 
-    r = vertices[0][0]
-    g = vertices[0][1]
-    b = vertices[0][2]
+    #ok so here. xr yg zb could be the x y z of the normals if it's phong shading,
+    #OR they could be the r g b if it's gouraud shading. becasue essentially what
+    #is going on is regardless of phong or gouraud, something is being incremented
+    #and that something is in the parameter vertices. depending on whether shading
+    #is "gouraud" or "phong", they are either the rgb or xyz. fuck this bullshit.
+    xr = vertices[0][0]
+    yg = vertices[0][1]
+    zb = vertices[0][2]
     #changes in the vertices
     dxr = (vertices[1][0] - vertices[0][0]) / (x1 - x0 + 1) if (x1 - x0 + 1) != 0 else 0
     dyg = (vertices[1][1] - vertices[0][1]) / (x1 - x0 + 1) if (x1 - x0 + 1) != 0 else 0
@@ -26,29 +31,22 @@ def draw_scanline_shading(x0, z0, x1, z1, y, screen, zbuffer, color, vertices, v
 
     while x <= x1:
         if shading == 'gouraud':
-            gcolor = [ int(r), int(g), int(b)]
-            plot(screen, zbuffer, gcolor, x, y, z)
-        # elif shading == 'phong':
-        #     colors = [0,0,0]
-        #     for i in light:
-        #         color = get_lighting([r,g,b], view, ambient, light, symbols, reflect)
-        #         colors[0] += color[0]
-        #         colors[1] += color[1]
-        #         colors[2] += color[2]
-        #     plot(screen, zbuffer, colors, x, y, z)
+            gcolor = [ int(xr), int(yg), int(zb)]
+            plot(screen, zbuffer, gcolor, xr, yg, zb)
+
         elif shading == 'phong':
-            colors = get_lighting([r,g,b], view, ambient, light, symbols, reflect)
-            plot(screen, zbuffer, colors, x, y, z)
+            colors = get_lighting([xr,yg,zb], view, ambient, light, symbols, reflect)
+            plot(screen, zbuffer, colors, xr, yg, zb)
 
 
-        x+= 1
-        z+= (z1 - z0) / (x1 - x0 + 1) if (x1 - x0 + 1) != 0 else 0
+        xr+= 1
+        zb+= (z1 - z0) / (x1 - x0 + 1) if (x1 - x0 + 1) != 0 else 0
 
         # update values based on those slopes
         if shading == 'gouraud' or shading == 'phong':
-            r += dxr
-            g += dyg
-            b += dzb
+            xr += dxr
+            yg += dyg
+            zb += dzb
 
 def scanline_convert_shading(polygons, point, screen, zbuffer, view, ambient, light, symbols, reflect, vectors, shading):
     flip = False
@@ -93,7 +91,7 @@ def scanline_convert_shading(polygons, point, screen, zbuffer, view, ambient, li
 
     while y <= int(points[TOP][1]):
         if ( not flip and y >= int(points[MID][1])):
-            flip = not flip
+            flip = True
 
             dx1 = (points[TOP][0] - points[MID][0]) / distance2 if distance2 != 0 else 0
             dz1 = (points[TOP][2] - points[MID][2]) / distance2 if distance2 != 0 else 0
