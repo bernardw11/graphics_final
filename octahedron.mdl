@@ -1,0 +1,10 @@
+constants shiny_purple 0.2 0.3 0.7 0.0 0.0 0.0 0.0 0.3 0.7
+constants matte_purple 0.2 0.7 0.3 0.0 0.0 0.0 0.0 0.7 0.3
+//BODY
+push
+move 250 250 0
+rotate y -20
+scale 30 30 30
+mesh :octahedron
+display
+save octahedron.png

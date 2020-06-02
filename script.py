@@ -165,7 +165,7 @@ def run(filename):
                 elif command["shade_type"] == "phong":
                     shading = "phong"
             elif c == 'mesh':
-                if command['constants']:
+                if command['constants'] and command['constants'] != ':':
                     reflect = command['constants']
                 filename = args[0] + '.obj'
                 f = open(filename, "r")
