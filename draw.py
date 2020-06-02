@@ -285,6 +285,7 @@ def add_mesh(polygons, meshfile):
                 vertices = []
                 for x in elements[1:]:
                     vertices.append(int(x) - 1)
+                faces.append(vertices)
 
         #put everything together: draw triangles btwn the triangles in faces
         #or if each face has four points (quadrilateral geometry),
@@ -296,15 +297,15 @@ def add_mesh(polygons, meshfile):
             pi2 = face[2]
             if len(face) == 3:
                 #three points, (0, 1, 2), draw one triangle.
-                add_polygon(polygons, points[pi0][0], points[pi0][1], points[pi0][2]
-                                      points[pi1][0], points[pi1][1], points[pi1][2]
+                add_polygon(polygons, points[pi0][0], points[pi0][1], points[pi0][2],
+                                      points[pi1][0], points[pi1][1], points[pi1][2],
                                       points[pi2][0], points[pi2][1], points[pi2][2])
             if len(face) == 4:
                 pi3 = face[3]
                 #four points, (0, 1, 2, 3), draw two triangles.
                 # (0, 1, 2)
-                add_polygon(polygons, points[pi0][0], points[pi0][1], points[pi0][2]
-                                      points[pi1][0], points[pi1][1], points[pi1][2]
+                add_polygon(polygons, points[pi0][0], points[pi0][1], points[pi0][2],
+                                      points[pi1][0], points[pi1][1], points[pi1][2],
                                       points[pi2][0], points[pi2][1], points[pi2][2])
                 # (0, 2, 3)
                 add_polygon(polygons, points[pi0][0], points[pi0][1], points[pi0][2]
