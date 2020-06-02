@@ -11,12 +11,13 @@
 # Prerequisites
 *.d
 
-# Object files
-*.o
-*.ko
-*.obj
-*.elf
-
+#NAHHHHHHHHHHHHHHHHHHHHHHHHHHHHH
+## Object files
+#*.o
+#*.ko
+#*.obj
+#*.elf
+#NAHHHHHHHHHHHHHHHHHHHHHHHHHHHH
 # Linker output
 *.ilk
 *.map
