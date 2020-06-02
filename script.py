@@ -165,6 +165,17 @@ def run(filename):
                 elif command["shade_type"] == "phong":
                     shading = "phong"
 
+            elif c == "mesh":
+                if command['constants']:
+                    reflect = command['constants']
+                filename = args[0] + '.obj'
+                f = open(filename, "r")
+                add_mesh(tmp, f)
+                f.close
+                matrix_mult( stack[-1], tmp )
+                draw_polygons(tmp, screen, zbuffer, view, ambient, light, symbols, reflect, shading)
+                temp = []
+                reflect = '.white'
             elif c == 'box':
                 if command['constants']:
                     reflect = command['constants']
