@@ -268,13 +268,13 @@ def draw_polygons( polygons, screen, zbuffer, view, ambient, lights, symbols, re
 def add_mesh(polygons, meshfile):
     meshfile_lines = meshfile.readlines()
 
+    #create a list of points (x, y, z) and faces (p1, p2, p3, p4 optional)
+    #each point has 3 coordinates
+    #each face has 3 or 4 points[] indices.
+    points = []
+    faces = []
     for line in meshfile_lines:
         elements = line.split()
-        #create a list of points (x, y, z) and faces (p1, p2, p3, p4 optional)
-        #each point has 3 coordinates
-        #each face has 3 or 4 points[] indices.
-        points = []
-        faces = []
         if len(elements) > 0:
             if elements[0] == 'v':
                 coords = []
@@ -287,30 +287,30 @@ def add_mesh(polygons, meshfile):
                     vertices.append(int(x) - 1)
                 faces.append(vertices)
 
-        #put everything together: draw triangles btwn the triangles in faces
-        #or if each face has four points (quadrilateral geometry),
-        #draw two triangles.
-        for face in faces:
-            #pi means points index
-            pi0 = face[0]
-            pi1 = face[1]
-            pi2 = face[2]
-            if len(face) == 3:
-                #three points, (0, 1, 2), draw one triangle.
-                add_polygon(polygons, points[pi0][0], points[pi0][1], points[pi0][2],
-                                      points[pi1][0], points[pi1][1], points[pi1][2],
-                                      points[pi2][0], points[pi2][1], points[pi2][2])
-            if len(face) == 4:
-                pi3 = face[3]
-                #four points, (0, 1, 2, 3), draw two triangles.
-                # (0, 1, 2)
-                add_polygon(polygons, points[pi0][0], points[pi0][1], points[pi0][2],
-                                      points[pi1][0], points[pi1][1], points[pi1][2],
-                                      points[pi2][0], points[pi2][1], points[pi2][2])
-                # (0, 2, 3)
-                add_polygon(polygons, points[pi0][0], points[pi0][1], points[pi0][2]
-                                      points[pi2][0], points[pi2][1], points[pi2][2]
-                                      points[pi3][0], points[pi3][1], points[pi3][2])
+    #put everything together: draw triangles btwn the triangles in faces
+    #or if each face has four points (quadrilateral geometry),
+    #draw two triangles.
+    for face in faces:
+        #pi means points index
+        pi0 = face[0]
+        pi1 = face[1]
+        pi2 = face[2]
+        if len(face) == 3:
+            #three points, (0, 1, 2), draw one triangle.
+            add_polygon(polygons, points[pi0][0], points[pi0][1], points[pi0][2],
+                                  points[pi1][0], points[pi1][1], points[pi1][2],
+                                  points[pi2][0], points[pi2][1], points[pi2][2])
+        if len(face) == 4:
+            pi3 = face[3]
+            #four points, (0, 1, 2, 3), draw two triangles.
+            # (0, 1, 2)
+            add_polygon(polygons, points[pi0][0], points[pi0][1], points[pi0][2],
+                                  points[pi1][0], points[pi1][1], points[pi1][2],
+                                  points[pi2][0], points[pi2][1], points[pi2][2])
+            # (0, 2, 3)
+            add_polygon(polygons, points[pi0][0], points[pi0][1], points[pi0][2],
+                                  points[pi2][0], points[pi2][1], points[pi2][2],
+                                  points[pi3][0], points[pi3][1], points[pi3][2])
 
 def add_box(polygons, x, y, z, width, height, depth):
     x1 = x + width

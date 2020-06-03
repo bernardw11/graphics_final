@@ -168,9 +168,9 @@ def run(filename):
                 if command['constants'] and command['constants'] != ':':
                     reflect = command['constants']
                 filename = args[0] + '.obj'
-                f = open(filename, "r")
-                add_mesh(tmp, f)
-                f.close
+                file = open(filename, "r")
+                add_mesh(tmp, file)
+                file.close
                 matrix_mult( stack[-1], tmp )
                 draw_polygons(tmp, screen, zbuffer, view, ambient, light, symbols, reflect, shading)
                 temp = []
