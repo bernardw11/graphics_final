@@ -16,3 +16,6 @@ Features we want to implement:
     * Add a parameter to change how it calculates the change over time: Linear, Exponential, Logarithmic
     * Syntax: `vary [knob] [start_frame] [end_frame] [start_value] [end_value] [equation]`
     * Ex. `vary tilt 0 100 0 1 2x^2`
+  * New primitive shapes
+    * Cylinder: `cylinder cx cy cz r h`
+    * Cone: `cone cx cy cz r h`
