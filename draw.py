@@ -453,6 +453,89 @@ def generate_torus(cx, cy, cz, r0, r1, step):
             points.append([x, y, z])
     return points
 
+
+def add_cylinder(polygons, cx, cy, cz, r, h, step):
+    points = generate_cylinder(cx, cy, cz, r, h, step)
+    i = 1
+    while i < step + 1:
+        top = points[0] #top face
+        bottom = points[1] #bottom face
+        p1 = i
+        p2 = i % step + 1
+        add_polygon(polygons,
+                    top[0][0], top[0][1], top[0][2],
+                    top[p2][0], top[p2][1], top[p2][2],
+                    top[p1][0], top[p1][1], top[p1][2])
+        add_polygon(polygons,
+                    bottom[0][0],bottom[0][1], bottom[0][2],
+                    bottom[p1][0], bottom[p1][1], bottom[p1][2],
+                    bottom[p2][0], bottom[p2][1], bottom[p2][2])
+        add_polygon(polygons,
+                    top[p1][0], top[p1][1], top[p1][2],
+                    bottom[p2][0], bottom[p2][1], bottom[p2][2],
+                    bottom[i][0], bottom[i][1], bottom[i][2])
+        add_polygon(polygons,
+                    bottom[p2][0], bottom[p2][1], bottom[p2][2],
+                    top[p1][0], top[p1][1], top[p1][2],
+                    top[p2][0], top[p2][1], top[p2][2])
+        i += 1
+
+
+
+def generate_cylinder(cx, cy, cz, r, h, step ):
+    points = []
+
+    #top face
+    top = []
+    top.append([cx, cy, cz])
+    for i in range(step):
+        rot = float(i)/step
+        x1 = r * math.cos(2 * math.pi * rot) + cx
+        z1 = r * math.sin(2 * math.pi * rot) + cz
+        top.append([x1, cy, z1])
+    points.append(top)
+
+    #bottom face
+    bottom = []
+    bottom.append([cx, cy - h, cz])
+    for i in range(step):
+        rot = float(i)/step
+        x1 = r * math.cos(2 * math.pi * rot) + cx
+        z1 = r * math.sin(2 * math.pi * rot) + cz
+        bottom.append([x1, cy - h, z1])
+    points.append(bottom)
+    return points
+
+
+def add_cone(polygons, cx, cy, cz, r, h, step ):
+    points = generate_cone(cx, cy, cz, r, h, step)
+    p0 = 0 #center of bottom of cone
+    p3 = len(points) - 1 #tip of cone
+    for i in range(1, step + 1):
+        p1 = i
+        p2 = i % step + 1
+        add_polygon(polygons,
+                    points[p0][0], points[p0][1], points[p0][2],
+                    points[p1][0], points[p1][1], points[p1][2],
+                    points[p2][0], points[p2][1], points[p2][2])
+        add_polygon(polygons,
+                    points[p3][0], points[p3][1], points[p3][2],
+                    points[p2][0], points[p2][1], points[p2][2],
+                    points[p1][0], points[p1][1], points[p1][2])
+
+
+def generate_cone(cx, cy, cz, r, h, step):
+    points = []
+    points.append([cx, cy, cz])
+    for i in range(step):
+        rot = float(i)/step
+        x = cx + r * math.cos(2 * math.pi * rot)
+        z = cz + r * math.sin(2 * math.pi * rot)
+        points.append([x, cy, z])
+    points.append([cx, cy + h, cz])
+    return points
+
+
 def add_circle(points, cx, cy, cz, r, step):
     x0 = r + cx
     y0 = cy
