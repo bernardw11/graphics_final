@@ -71,6 +71,9 @@ def second_pass( commands, num_frames ):
         if command['op'] == 'vary':
             args = command['args']
             knob_name = command['knob']
+            #time to do different things for the different equations.
+            knob_eq = command['eq']
+
             start_frame = args[0]
             end_frame = args[1]
             start_value = float(args[2])
@@ -90,8 +93,14 @@ def second_pass( commands, num_frames ):
                     value = start_value
                     frames[f][knob_name] = value
                 elif f >= start_frame and f <= end_frame:
-                    value = start_value + delta * (f - start_frame)
-                    frames[f][knob_name] = value
+                    #this is where the incrementing happens.
+                    if not knob_eq:
+                        value = start_value + delta * (f - start_frame)
+                        frames[f][knob_name] = value
+                    elif knob_eq == "exponential":
+                        pass
+                    elif knob_eq == "logarithmic":
+                        pass
                 #print 'knob: ' + knob_name + '\tvalue: ' + str(frames[f][knob_name])
     return frames
 
