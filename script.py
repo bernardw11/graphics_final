@@ -86,22 +86,51 @@ def second_pass( commands, num_frames ):
                 print('Invalid vary command for knob: ' + knob_name)
                 exit()
 
-            delta = (end_value - start_value) / (end_frame - start_frame)
-
-            for f in range(num_frames):
-                if f == start_frame:
-                    value = start_value
-                    frames[f][knob_name] = value
-                elif f >= start_frame and f <= end_frame:
-                    #this is where the incrementing happens.
-                    if not knob_eq:
+            if not knob_eq:
+                delta = (end_value - start_value) / (end_frame - start_frame)
+                for f in range(num_frames):
+                    if f == start_frame:
+                        value = start_value
+                        frames[f][knob_name] = value
+                    elif f >= start_frame and f <= end_frame:
+                        #this is where the incrementing happens.
                         value = start_value + delta * (f - start_frame)
                         frames[f][knob_name] = value
-                    elif knob_eq == "exponential":
-                        pass
-                    elif knob_eq == "logarithmic":
-                        pass
-                #print 'knob: ' + knob_name + '\tvalue: ' + str(frames[f][knob_name])
+                        #print 'knob: ' + knob_name + '\tvalue: ' + str(frames[f][knob_name])
+            elif knob_eq == "quadratic":
+                delta = (end_value - start_value) / (end_frame - start_frame) ** 2
+                for f in range(num_frames):
+                    if f == start_frame:
+                        value = start_value
+                        frames[f][knob_name] = value
+                    elif f >= start_frame and f <= end_frame:
+                        #what the fuck is the next line. idfk. idfk. fix this shit.
+                        value = start_value + delta * ((f - start_frame) ** 2)
+                        frames[f][knob_name] = value
+                        #print 'knob: ' + knob_name + '\tvalue: ' + str(frames[f][knob_name])
+            #DOES NOT WORK YET \|
+            elif knob_eq == "exponential":
+                delta = (end_value - start_value) / (end_frame - start_frame)
+                for f in range(num_frames):
+                    if f == start_frame:
+                        value = start_value
+                        frames[f][knob_name] = value
+                    elif f >= start_frame and f <= end_frame:
+                        #this is where the incrementing happens.
+                        value = start_value + delta * (f - start_frame)
+                        frames[f][knob_name] = value
+                        #print 'knob: ' + knob_name + '\tvalue: ' + str(frames[f][knob_name])
+            elif knob_eq == "logarithmic":
+                delta = (end_value - start_value) / (end_frame - start_frame)
+                for f in range(num_frames):
+                    if f == start_frame:
+                        value = start_value
+                        frames[f][knob_name] = value
+                    elif f >= start_frame and f <= end_frame:
+                        #this is where the incrementing happens.
+                        value = start_value + delta * (f - start_frame)
+                        frames[f][knob_name] = value
+                        #print 'knob: ' + knob_name + '\tvalue: ' + str(frames[f][knob_name])
     return frames
 
 
