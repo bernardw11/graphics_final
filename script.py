@@ -108,7 +108,7 @@ def second_pass( commands, num_frames ):
                         value = start_value + delta * ((f - start_frame) ** 2)
                         frames[f][knob_name] = value
                         #print 'knob: ' + knob_name + '\tvalue: ' + str(frames[f][knob_name])
-            #DOES NOT WORK YET \|
+            #THIS KINDA WORKS
             elif knob_eq == "exponential":
                 delta = (end_value - start_value) / (end_frame - start_frame)
                 for f in range(num_frames):
@@ -117,9 +117,10 @@ def second_pass( commands, num_frames ):
                         frames[f][knob_name] = value
                     elif f >= start_frame and f <= end_frame:
                         #this is where the incrementing happens.
-                        value = start_value + delta * (f - start_frame)
+                        value = start_value + (100 ** ((f - start_frame) / (end_frame - start_frame))) / 100 * (end_value - start_value)
                         frames[f][knob_name] = value
                         #print 'knob: ' + knob_name + '\tvalue: ' + str(frames[f][knob_name])
+            #below does noT YET WORK
             elif knob_eq == "logarithmic":
                 delta = (end_value - start_value) / (end_frame - start_frame)
                 for f in range(num_frames):
