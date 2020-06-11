@@ -9,24 +9,22 @@ constants shiny_blue 0 0 0 0 0 0 0.7 0.5 0.9
 constants shiny_red 0.2392156863 0.8 1.0 0.1215686275 0 1.0 0.0196078431 0 1.0
 constants dull_orange 0.8 0.8 0.8 0.1 0.4 0.2 0 0 0
 
+//SETTING UP BACKGROUND
 push
 move 250 100 0
 rotate y -30
 rotate x 5
-push
-move 0 0 300
+move 0 0 800
 
 //440:400, 40:0, -360:-400, -760:-800
-
 push
 move 0 0 440
 rotate x -90
 box bluish -100 250 40 200 250 40
 pop
-push
 box greenish -100 250 -760 200 250 40
-pop
 
+//GREEN
 push
 rotate x -90
 push
@@ -34,6 +32,8 @@ rotate x 90
 torus dull_green 0 40 -175 8 35
 pop
 box greenish -100 250 40 200 250 40
+
+//GREENEYES
 push
 move 0 270 20
 rotate x 90
@@ -42,9 +42,29 @@ move 0 -50 0
 move 0 0 -110
 sphere matte_white -30 0 0 20
 sphere matte_white 30 0 0 20
+push
+move -30 0 0
+rotate x 90
+rotate y 50
+sphere dull_orange 0 15 0 8
+pop
+push
+move 30 0 0
+rotate x 90
+rotate z -70
+sphere dull_orange 0 15 0 8
 pop
 pop
 
+pop
+
+move 0 0 -400
 push
-box bluish -100 250 -360 200 250 40
+rotate x -90
+push
+rotate x 90
+torus dull_green 0 40 -175 8 35
+pop
+box bluish -100 250 40 200 250 40
+
 display
