@@ -20,6 +20,10 @@ move 0 0 800 backgroundmove
 push
 move 0 0 440
 rotate x -90
+push
+rotate x 90
+torus shiny_blue 0 40 -175 8 35
+pop
 box bluish -100 250 40 200 250 40
 pop
 box greenish -100 250 -760 200 250 40
@@ -39,15 +43,15 @@ pop
 push
 rotate x -90 greenfall
 move 0 0 20
-move 0 300 0 geyeup
-move 0 -50 0 geyedown
-move 0 0 -110 geyehoriz
+move 0 0 300 geyeup
+move 0 0 -50 geyedown
+move 0 110 0 geyehoriz
 rotate x 90 transition
 move 0 0 -400 transition
 rotate x -90 bluefall
-move 0 300 0 beyeup
-move 0 -50 0 beyedown
-move 0 0 -110 beyedown
+move 0 0 300 beyeup
+move 0 0 -50 beyedown
+move 0 110 0 beyedown
 sphere matte_white -30 270 0 20
 sphere matte_white 30 270 0 20
 push
