@@ -1,4 +1,4 @@
-import mdl
+import mdl, math
 from display import *
 from matrix import *
 from draw import *
@@ -86,7 +86,7 @@ def second_pass( commands, num_frames ):
                 print('Invalid vary command for knob: ' + knob_name)
                 exit()
 
-            if not knob_eq:
+            if (not knob_eq) or knob_eq == "linear":
                 delta = (end_value - start_value) / (end_frame - start_frame)
                 for f in range(num_frames):
                     if f == start_frame:
@@ -97,20 +97,27 @@ def second_pass( commands, num_frames ):
                         value = start_value + delta * (f - start_frame)
                         frames[f][knob_name] = value
                         #print 'knob: ' + knob_name + '\tvalue: ' + str(frames[f][knob_name])
-            elif knob_eq == "quadratic":
+            elif knob_eq == "pquadratic":
                 delta = (end_value - start_value) / (end_frame - start_frame) ** 2
                 for f in range(num_frames):
                     if f == start_frame:
                         value = start_value
                         frames[f][knob_name] = value
                     elif f >= start_frame and f <= end_frame:
-                        #what the fuck is the next line. idfk. idfk. fix this shit.
                         value = start_value + delta * ((f - start_frame) ** 2)
                         frames[f][knob_name] = value
                         #print 'knob: ' + knob_name + '\tvalue: ' + str(frames[f][knob_name])
-            #THIS KINDA WORKS
-            elif knob_eq == "exponential":
-                delta = (end_value - start_value) / (end_frame - start_frame)
+            elif knob_eq == "nquadratic":
+                delta = (end_value - start_value) / (end_frame - start_frame) ** 2
+                for f in range(num_frames):
+                    if f == start_frame:
+                        value = start_value
+                        frames[f][knob_name] = value
+                    elif f >= start_frame and f <= end_frame:
+                        value = end_value - delta * ((end_frame - f) ** 2)
+                        frames[f][knob_name] = value
+                        #print 'knob: ' + knob_name + '\tvalue: ' + str(frames[f][knob_name])
+            elif knob_eq == "pexponential":
                 for f in range(num_frames):
                     if f == start_frame:
                         value = start_value
@@ -120,16 +127,14 @@ def second_pass( commands, num_frames ):
                         value = start_value + (100 ** ((f - start_frame) / (end_frame - start_frame))) / 100 * (end_value - start_value)
                         frames[f][knob_name] = value
                         #print 'knob: ' + knob_name + '\tvalue: ' + str(frames[f][knob_name])
-            #below does noT YET WORK
-            elif knob_eq == "logarithmic":
-                delta = (end_value - start_value) / (end_frame - start_frame)
+            elif knob_eq == "nexponential":
                 for f in range(num_frames):
                     if f == start_frame:
                         value = start_value
                         frames[f][knob_name] = value
                     elif f >= start_frame and f <= end_frame:
                         #this is where the incrementing happens.
-                        value = start_value + delta * (f - start_frame)
+                        value = end_value - (100 ** ((end_frame - f) / (end_frame - start_frame))) / 100 * (end_value - start_value)
                         frames[f][knob_name] = value
                         #print 'knob: ' + knob_name + '\tvalue: ' + str(frames[f][knob_name])
     return frames
