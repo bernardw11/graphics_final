@@ -1,0 +1,119 @@
+frames 160
+basename gallery
+constants bluish 0.2 0.4 0.2 0.3 0.3 0.6 0.4 0.9 0.4
+constants greenish 0.2 0.2 0.4 0.3 0.6 0.3 0.4 0.4 0.9
+constants mystery 0.4 0.2 0.2 0.6 0.3 0.3 0.4 0.9 0.4
+constants matte_white 0.0 1.0 0.0 0.0 1.0 0.0 0.0 1.0 0.0
+constants dull_green 0.1 0 0.2 0.9 0.4 0.3 0.3 0 0
+constants shiny_blue 0 0 0 0 0 0 0.7 0.5 0.9
+constants shiny_red 0.2392156863 0.8 1.0 0.1215686275 0 1.0 0.0196078431 0 1.0
+constants dull_orange 0.8 0.8 0.8 0.1 0.4 0.2 0 0 0
+
+//SETTING UP BACKGROUND
+push
+move 250 100 0
+rotate y -30
+rotate x 5
+move 0 0 800 backgroundmove
+
+//440:400, 40:0, -360:-400, -760:-800, -1160:-1200
+push
+move 0 0 440
+rotate x -90
+box bluish -100 250 40 200 250 40
+pop
+box greenish -100 250 -760 200 250 40
+box bluish -100 250 -1160 200 250 40
+
+//GREEN
+push
+rotate x -90 greenfall
+push
+rotate x 90
+torus dull_green 0 40 -175 8 35
+pop
+box greenish -100 250 40 200 250 40
+pop
+
+//EYES
+push
+rotate x -90 fall
+push
+move 0 270 20
+rotate x 90
+move 0 300 0 eyeup
+move 0 -50 0 eyedown
+move 0 0 -110 eyehoriz
+sphere matte_white -30 0 0 20
+sphere matte_white 30 0 0 20
+push
+move -30 0 0
+rotate x 90 perpendicular
+rotate y 50 pupils
+sphere dull_orange 0 15 0 8
+pop
+push
+move 30 0 0
+rotate x 90 perpendicular
+rotate z -70 pupils
+sphere dull_orange 0 15 0 8
+pop
+pop
+
+pop
+
+//BLUE
+move 0 0 -400
+push
+rotate x -90 bluefall
+push
+rotate x 90
+torus shiny_blue 0 40 -175 8 35
+pop
+box bluish -100 250 40 200 250 40
+
+//BLUEEYES
+push
+move 0 270 20
+rotate x 90
+move 0 300 0 eyeup
+move 0 -50 0 eyedown
+move 0 0 -110 eyehoriz
+sphere matte_white -30 0 0 20
+sphere matte_white 30 0 0 20
+push
+move -30 0 0
+rotate x 90 perpendicular
+rotate y 50 pupils
+sphere dull_orange 0 15 0 8
+pop
+push
+move 30 0 0
+rotate x 90 perpendicular
+rotate z -70 pupils
+sphere dull_orange 0 15 0 8
+pop
+pop
+
+pop
+
+
+vary yeeteyes 79 80 0 1
+
+vary perpendicular 50 79 0 1 nquadratic
+vary perpendicular 130 159 0 1 nquadratic
+vary pupils 50 64 0 1
+vary pupils 65 79 1 0
+vary pupils 130 144 0 1
+vary pupils 145 159 1 0
+vary eyeup 50 69 0 1 nexponential
+vary eyeup 130 149 0 1 nexponential
+vary eyedown 70 79 0 1 pexponential
+vary eyedown 150 159 0 1 pexponential
+vary eyehoriz 59 79 0 1
+vary eyehoriz 139 159 0 1
+vary greenfall 0 49 0 1 pexponential
+vary bluefall 80 129 0 1 pexponential
+vary fall 0 49 0 1 pexponential
+vary fall 80 129 0 1 pexponential
+vary backgroundmove 0 159 0 1

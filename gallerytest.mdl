@@ -23,6 +23,7 @@ rotate x -90
 box bluish -100 250 40 200 250 40
 pop
 box greenish -100 250 -760 200 250 40
+box bluish -100 250 -1160 200 250 40
 
 //GREEN
 push
@@ -32,10 +33,17 @@ rotate x 90
 torus dull_green 0 40 -175 8 35
 pop
 box greenish -100 250 40 200 250 40
+pop
 
-//GREENEYES
+//EYES
+push
+rotate x -90
 push
 move 0 270 20
+rotate x 90
+move 0 300 0
+move 0 -50 0
+move 0 0 -110
 rotate x 90
 move 0 300 0
 move 0 -50 0
@@ -46,10 +54,14 @@ push
 move -30 0 0
 rotate x 90
 rotate y 50
+rotate x 90
+rotate y 50
 sphere dull_orange 0 15 0 8
 pop
 push
 move 30 0 0
+rotate x 90
+rotate z -70
 rotate x 90
 rotate z -70
 sphere dull_orange 0 15 0 8
@@ -58,13 +70,15 @@ pop
 
 pop
 
+//BLUE
 move 0 0 -400
 push
 rotate x -90
 push
 rotate x 90
-torus dull_green 0 40 -175 8 35
+torus shiny_blue 0 40 -175 8 35
 pop
 box bluish -100 250 40 200 250 40
+pop
 
 display

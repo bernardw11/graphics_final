@@ -1,6 +1,6 @@
 from subprocess import Popen, PIPE
-#from os import remove, fork, execlp
-from os import remove, execlp
+from os import remove, fork, execlp
+#from os import remove, execlp
 
 #constants
 XRES = 500
@@ -74,7 +74,7 @@ def save_ppm( screen, fname ):
 #     f.write( ppm )
 #     f.close()
 
-'''
+
 def save_extension( screen, fname ):
     ppm_name = fname[:fname.find('.')] + '.ppm'
     save_ppm( screen, ppm_name )
@@ -119,3 +119,4 @@ def make_animation( name ):
     print('Saving animation as ' + name)
     import subprocess
     subprocess.call(["magick", "-delay", "1.7", name_arg, name])
+'''
