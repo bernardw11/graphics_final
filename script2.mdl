@@ -1,0 +1,8 @@
+push
+shading phong
+move 250 250 0
+rotate y -20
+scale 30 30 30 
+mesh :shuttle
+display
+save shuttle.png

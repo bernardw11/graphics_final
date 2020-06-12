@@ -1,0 +1,11 @@
+frames 50
+basename coneCylinder
+shading flat
+push
+move 250 250 0
+rotate x 90 tilt1
+rotate z 120 tilt2
+cylinder 100 100 0 60 120
+cone -100 -100 0 60 120
+vary tilt1 0 24 0 1 pexponential
+vary tilt2 25 49 0 1 nexponential
