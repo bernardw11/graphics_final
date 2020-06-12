@@ -13,9 +13,23 @@ Features we want to implement:
     * Ex. Gouraud and Phong Shading
 * Additions to MDL that require changes to the language:
   * Change the behavior of vary
-    * Add a parameter to change how it calculates the change over time: Linear, Exponential, Logarithmic
-    * Syntax: `vary [knob] [start_frame] [end_frame] [start_value] [end_value] [equation]`
-    * Ex. `vary tilt 0 100 0 1 2x^2`
+    * Add a parameter to change how it calculates the change over time: Linear, Exponential, Quadratic
+    * Syntax: `vary [knob] [start_frame] [end_frame] [start_value] [end_value] [type]`
+    * Ex. `vary tilt 0 100 0 1 pquadratic`
+    * Types: `pquadratic`, `nquadratic`, `pexponential`, `nexponential`, `linear`
   * New primitive shapes
     * Cylinder: `cylinder cx cy cz r h`
     * Cone: `cone cx cy cz r h`
+
+Running the program:
+* Just type `make`
+* A series of images and gifs will be generated in this order
+  * face.mdl: Previous face image, gouraud shading
+  * script0.mdl: Previous face image, phong shading
+  * script1.mdl: Shuttle created using mesh, flat shading
+  * script2.mdl: Shuttle created using mesh, phong shading
+  * script3.mdl: Box speeding up using vary (pquadratic)
+  * script4.mdl: Box slowing up using vary (nquadratic)
+  * script5.mdl: New shapes (cone and cylinder) tiling using vary (pexponential and nexponential)
+  * gallery.mdl: Gallery post! The grand finale
+    * credits to Lucas Zanotto https://giphy.com/gifs/eyes-character-bouncing-U7KEaEro8JJMFeumBY
