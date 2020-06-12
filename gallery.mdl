@@ -18,7 +18,7 @@ move 0 0 800 backgroundmove
 
 //440:400, 40:0, -360:-400, -760:-800, -1160:-1200
 push
-move 0 0 440
+move 0 0 400
 rotate x -90
 push
 rotate x 90
@@ -26,7 +26,15 @@ torus shiny_blue 0 40 -175 8 35
 pop
 box bluish -100 250 40 200 250 40
 pop
+push
+rotate x 90
+torus dull_green 0 -760 -175 8 35
+pop
 box greenish -100 250 -760 200 250 40
+push
+rotate x 90
+torus shiny_blue 0 -1160 -175 8 35
+pop
 box bluish -100 250 -1160 200 250 40
 
 //GREEN
@@ -41,13 +49,15 @@ pop
 
 //EYES
 push
+move 0 0 -400 transition
+push
 rotate x -90 greenfall
 move 0 0 20
 move 0 0 300 geyeup
 move 0 0 -50 geyedown
 move 0 110 0 geyehoriz
+move 0 -110 -250 transition
 rotate x 90 transition
-move 0 0 -400 transition
 rotate x -90 bluefall
 move 0 0 300 beyeup
 move 0 0 -50 beyedown
@@ -58,6 +68,7 @@ push
 move -30 270 0
 rotate x 90 gperpendicular
 rotate y 50 gpupils
+rotate x -90 transition
 rotate x 90 bperpendicular
 rotate y 50 bpupils
 sphere dull_orange 0 0 15 8
@@ -66,11 +77,13 @@ push
 move 30 270 0
 rotate x 90 gperpendicular
 rotate z -70 gpupils
+rotate x -90 transition
 rotate x 90 bperpendicular
 rotate y 50 bpupils
 sphere dull_orange 0 0 15 8
 pop
 
+pop
 pop
 
 //BLUE

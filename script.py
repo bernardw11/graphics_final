@@ -195,10 +195,10 @@ def run(filename):
             frame = frames[f]
             for knob in frame:
                 symbols[knob][1] = frame[knob]
-                print('\tkob: ' + knob + '\tvalue: ' + str(frame[knob]))
-
+                #print('\tkob: ' + knob + '\tvalue: ' + str(frame[knob]))
+        #FUCK THESE PRINT STATEMENTS YO
         for command in commands:
-            print(command)
+            #print(command)
             c = command['op']
             args = command['args']
             knob_value = 1
