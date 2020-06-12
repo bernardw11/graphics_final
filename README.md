@@ -17,6 +17,7 @@ Features we want to implement:
     * Syntax: `vary [knob] [start_frame] [end_frame] [start_value] [end_value] [type]`
     * Ex. `vary tilt 0 100 0 1 pquadratic`
     * Types: `pquadratic`, `nquadratic`, `pexponential`, `nexponential`, `linear`
+    * the prefixes p and n denote whether we are speeding up (p) or slowing down (n).
   * New primitive shapes
     * Cylinder: `cylinder cx cy cz r h`
     * Cone: `cone cx cy cz r h`
