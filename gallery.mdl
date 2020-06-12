@@ -27,6 +27,15 @@ pop
 box bluish -100 250 40 200 250 40
 pop
 push
+move 0 0 800
+rotate x -90
+push
+rotate x 90
+torus dull_green 0 40 -175 8 35
+pop
+box greenish -100 250 40 200 250 40
+pop
+push
 rotate x 90
 torus dull_green 0 -760 -175 8 35
 pop
@@ -60,7 +69,7 @@ rotate x 90 transition
 rotate x -90 bluefall
 move 0 0 300 beyeup
 move 0 0 -50 beyedown
-move 0 110 0 beyedown
+move 0 110 0 beyehoriz
 sphere matte_white -30 270 20 20
 sphere matte_white 30 270 20 20
 push
