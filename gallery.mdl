@@ -52,7 +52,6 @@ push
 move 0 0 -400 transition
 push
 rotate x -90 greenfall
-move 0 0 20
 move 0 0 300 geyeup
 move 0 0 -50 geyedown
 move 0 110 0 geyehoriz
@@ -62,10 +61,10 @@ rotate x -90 bluefall
 move 0 0 300 beyeup
 move 0 0 -50 beyedown
 move 0 110 0 beyedown
-sphere matte_white -30 270 0 20
-sphere matte_white 30 270 0 20
+sphere matte_white -30 270 20 20
+sphere matte_white 30 270 20 20
 push
-move -30 270 0
+move -30 270 20
 rotate x 90 gperpendicular
 rotate y 50 gpupils
 rotate x -90 transition
@@ -74,7 +73,7 @@ rotate y 50 bpupils
 sphere dull_orange 0 0 15 8
 pop
 push
-move 30 270 0
+move 30 270 20
 rotate x 90 gperpendicular
 rotate z -70 gpupils
 rotate x -90 transition
